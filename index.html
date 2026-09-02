@@ -45,9 +45,10 @@
       max-width: 480px;
     }
 
+    /* NAV */
     .port-nav {
       display: flex;
-      gap: 24px;
+      gap: 0;
       padding: 0 40px;
       border-bottom: 1px solid #1c1c1c;
     }
@@ -55,22 +56,24 @@
     .port-nav-item {
       font-size: 12px;
       color: #444;
-      padding: 14px 0;
+      padding: 14px 20px 14px 0;
+      margin-right: 4px;
       cursor: pointer;
       border-bottom: 1px solid transparent;
       font-family: 'JetBrains Mono', monospace;
       transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
     }
 
-    .port-nav-item:hover,
-    .port-nav-item.active {
-      color: #fff;
-      border-bottom-color: #fff;
-    }
+    .port-nav-item:hover { color: #aaa; }
+    .port-nav-item.active { color: #fff; border-bottom-color: #fff; }
 
-    .port-plugins {
-      padding: 0 40px 64px;
-    }
+    /* SECTIONS */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* PLUGINS */
+    .port-plugins { padding: 0 40px 64px; }
 
     .plugin-card {
       border-bottom: 1px solid #111;
@@ -87,11 +90,7 @@
       padding: 40px;
     }
 
-    .plugin-left {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .plugin-left { display: flex; flex-direction: column; gap: 10px; }
 
     .plugin-name {
       font-family: 'JetBrains Mono', monospace;
@@ -128,12 +127,7 @@
       max-width: 520px;
     }
 
-    .plugin-features {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      list-style: none;
-    }
+    .plugin-features { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
 
     .plugin-feature {
       font-family: 'JetBrains Mono', monospace;
@@ -145,10 +139,7 @@
       border-radius: 3px;
     }
 
-    .plugin-feature.highlight {
-      color: #666;
-      border-color: #222;
-    }
+    .plugin-feature.highlight { color: #666; border-color: #222; }
 
     .cmd-pill {
       font-family: 'JetBrains Mono', monospace;
@@ -160,11 +151,211 @@
       border-radius: 3px;
     }
 
-    /* contact section */
-    .port-contact {
-      padding: 48px 40px;
-      border-top: 1px solid #111;
+    /* PRICING */
+    .port-pricing { padding: 48px 40px 64px; }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #333;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
     }
+
+    .section-heading {
+      font-size: 22px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.6;
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: #111;
+      border: 1px solid #111;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .pricing-tier {
+      background: #000;
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .pricing-tier.featured {
+      background: #060606;
+    }
+
+    .tier-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: #fff;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      padding: 3px 8px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 20px;
+      letter-spacing: 0.08em;
+    }
+
+    .tier-badge.pop {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+    }
+
+    .tier-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: #888;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tier-price {
+      font-size: 28px;
+      font-weight: 500;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .tier-price-note {
+      font-size: 11px;
+      color: #333;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 24px;
+    }
+
+    .tier-divider {
+      height: 1px;
+      background: #111;
+      margin-bottom: 20px;
+    }
+
+    .tier-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+    .tier-feature {
+      font-size: 12px;
+      color: #555;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .tier-feature::before {
+      content: '—';
+      color: #222;
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tier-feature.on { color: #888; }
+    .tier-feature.on::before { content: '✓'; color: #444; }
+
+    .pricing-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #444;
+      border: 1px solid #1a1a1a;
+      border-radius: 4px;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      text-decoration: none;
+      margin-top: 28px;
+      display: block;
+      text-align: center;
+    }
+
+    .pricing-cta:hover { color: #fff; border-color: #333; }
+
+    .pricing-note {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #222;
+      line-height: 1.7;
+      border-top: 1px solid #0f0f0f;
+      padding-top: 24px;
+    }
+
+    .pricing-note span { color: #333; }
+
+    /* DONATION */
+    .port-donation { padding: 48px 40px 64px; }
+
+    .donation-card {
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 40px;
+      max-width: 540px;
+      background: #050505;
+    }
+
+    .donation-heading {
+      font-size: 20px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .donation-desc {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 400px;
+    }
+
+    .donation-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      color: #000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 12px 22px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+      cursor: pointer;
+    }
+
+    .donation-btn:hover { opacity: 0.88; }
+
+    .donation-btn svg { width: 16px; height: 16px; fill: #000; flex-shrink: 0; }
+
+    .donation-note {
+      margin-top: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: #252525;
+    }
+
+    /* CONTACT */
+    .port-contact { padding: 48px 40px; border-top: 1px solid #111; }
 
     .contact-label {
       font-family: 'JetBrains Mono', monospace;
@@ -174,12 +365,7 @@
       margin-bottom: 20px;
     }
 
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
+    .contact-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 
     .contact-item {
       display: flex;
@@ -194,29 +380,12 @@
       position: relative;
     }
 
-    .contact-item:hover {
-      border-color: #333;
-      background: #0f0f0f;
-    }
+    .contact-item:hover { border-color: #333; background: #0f0f0f; }
 
-    .contact-icon {
-      width: 18px;
-      height: 18px;
-      fill: #555;
-      flex-shrink: 0;
-    }
+    .contact-icon { width: 18px; height: 18px; fill: #555; flex-shrink: 0; }
 
-    .contact-platform {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: #444;
-    }
-
-    .contact-value {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      color: #bbb;
-    }
+    .contact-platform { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #444; }
+    .contact-value { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #bbb; }
 
     .contact-copied {
       position: absolute;
@@ -236,10 +405,9 @@
       transition: opacity 0.15s;
     }
 
-    .contact-item.copied .contact-copied {
-      opacity: 1;
-    }
+    .contact-item.copied .contact-copied { opacity: 1; }
 
+    /* FOOTER */
     .port-footer {
       padding: 24px 40px;
       border-top: 1px solid #111;
@@ -248,11 +416,7 @@
       align-items: center;
     }
 
-    .port-footer-text {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: #2a2a2a;
-    }
+    .port-footer-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #2a2a2a; }
 
     .port-dot {
       display: inline-block;
@@ -264,14 +428,14 @@
       vertical-align: middle;
     }
 
-    @media (max-width: 640px) {
-      .port-header { padding: 40px 20px 32px; }
-      .port-nav { padding: 0 20px; }
+    @media (max-width: 760px) {
+      .port-header, .port-pricing, .port-donation, .port-contact { padding-left: 20px; padding-right: 20px; }
+      .port-nav { padding: 0 20px; overflow-x: auto; }
       .port-plugins { padding: 0 20px 48px; }
-      .port-contact { padding: 32px 20px; }
       .port-footer { padding: 20px; }
       .plugin-card { grid-template-columns: 1fr; gap: 16px; }
       .plugin-card:hover { margin: 0 -20px; padding: 24px 20px; }
+      .pricing-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -284,76 +448,166 @@
   </header>
 
   <nav class="port-nav">
-    <span class="port-nav-item active">All plugins</span>
-    <span class="port-nav-item">Moderation</span>
-    <span class="port-nav-item">Staff tools</span>
+    <span class="port-nav-item active" onclick="showTab('plugins', this)">plugins</span>
+    <span class="port-nav-item" onclick="showTab('pricing', this)">pricing</span>
+    <span class="port-nav-item" onclick="showTab('donation', this)">donate</span>
   </nav>
 
-  <main class="port-plugins">
+  <!-- PLUGINS TAB -->
+  <div id="tab-plugins" class="section active">
+    <main class="port-plugins">
 
-    <div class="plugin-card">
-      <div class="plugin-left">
-        <p class="plugin-name">Offend</p>
-        <span class="plugin-tag">moderation</span>
-        <span class="plugin-tag">discord</span>
+      <div class="plugin-card">
+        <div class="plugin-left">
+          <p class="plugin-name">Offend</p>
+          <span class="plugin-tag">moderation</span>
+          <span class="plugin-tag">discord</span>
+        </div>
+        <div class="plugin-right">
+          <p class="plugin-tagline">Consistent punishments, one command.</p>
+          <p class="plugin-desc">Create custom offence presets with fixed punishments and durations. Every ban or mute gets a unique ID with a full audit trail — player, moderator, duration, and expiry — so your moderation history is always clean and accountable.</p>
+          <ul class="plugin-features">
+            <li class="plugin-feature highlight"><code class="cmd-pill">/offend</code> &nbsp;<code class="cmd-pill">/unoffend &lt;id&gt;</code></li>
+            <li class="plugin-feature">unique punishment IDs</li>
+            <li class="plugin-feature">discord logging</li>
+            <li class="plugin-feature">chat broadcasts</li>
+            <li class="plugin-feature">punishment lookup</li>
+          </ul>
+        </div>
       </div>
-      <div class="plugin-right">
-        <p class="plugin-tagline">Consistent punishments, one command.</p>
-        <p class="plugin-desc">Create custom offence presets with fixed punishments and durations. Every ban or mute gets a unique ID with a full audit trail — player, moderator, duration, and expiry — so your moderation history is always clean and accountable.</p>
-        <ul class="plugin-features">
-          <li class="plugin-feature highlight"><code class="cmd-pill">/offend</code> &nbsp;<code class="cmd-pill">/unoffend &lt;id&gt;</code></li>
-          <li class="plugin-feature">unique punishment IDs</li>
-          <li class="plugin-feature">discord logging</li>
-          <li class="plugin-feature">chat broadcasts</li>
-          <li class="plugin-feature">punishment lookup</li>
-        </ul>
+
+      <div class="plugin-card">
+        <div class="plugin-left">
+          <p class="plugin-name">ModCall</p>
+          <span class="plugin-tag">staff</span>
+          <span class="plugin-tag">utility</span>
+        </div>
+        <div class="plugin-right">
+          <p class="plugin-tagline">Players reach staff in one command.</p>
+          <p class="plugin-desc">When a player needs help — griefers, bugs, being stuck — they run <code class="cmd-pill">/modcall</code> and every online moderator is instantly alerted. A staff member accepts and teleports directly to them. No hunting, no DMs, no chaos in chat.</p>
+          <ul class="plugin-features">
+            <li class="plugin-feature highlight"><code class="cmd-pill">/modcall</code></li>
+            <li class="plugin-feature">instant staff alerts</li>
+            <li class="plugin-feature">accept &amp; teleport</li>
+            <li class="plugin-feature">organised queue</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="plugin-card">
+        <div class="plugin-left">
+          <p class="plugin-name">Sussy</p>
+          <span class="plugin-tag">anticheat</span>
+          <span class="plugin-tag">investigation</span>
+        </div>
+        <div class="plugin-right">
+          <p class="plugin-tagline">A silent queue for suspected cheaters.</p>
+          <p class="plugin-desc">Tracks GrimAC violations and unusual straight-down mining patterns, then surfaces flagged players in a private staff-only menu. Inspect, spectate, and review without the player ever knowing. Helps staff gather real evidence before acting — no false bans.</p>
+          <ul class="plugin-features">
+            <li class="plugin-feature highlight"><code class="cmd-pill">/sussy</code></li>
+            <li class="plugin-feature">GrimAC integration</li>
+            <li class="plugin-feature">mining analysis</li>
+            <li class="plugin-feature">spectate mode</li>
+            <li class="plugin-feature">silent — no alerts</li>
+            <li class="plugin-feature">evidence first</li>
+          </ul>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- PRICING TAB -->
+  <div id="tab-pricing" class="section">
+    <div class="port-pricing">
+      <p class="section-label">custom plugins</p>
+      <h2 class="section-heading">Built for your server, from scratch.</h2>
+      <p class="section-sub">Every plugin is written specifically for your server — no recycled templates, no compromises. Prices reflect the complexity of what you're asking for. Message on Discord to discuss before committing.</p>
+
+      <div class="pricing-grid">
+
+        <div class="pricing-tier">
+          <span class="tier-badge">starter</span>
+          <p class="tier-name">Simple</p>
+          <p class="tier-price">£15<span style="font-size:16px;color:#444"> – £35</span></p>
+          <p class="tier-price-note">one-off · no revisions included</p>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li class="tier-feature on">single command or mechanic</li>
+            <li class="tier-feature on">basic config file</li>
+            <li class="tier-feature on">delivered within 3–5 days</li>
+            <li class="tier-feature">no Discord integration</li>
+            <li class="tier-feature">no database</li>
+            <li class="tier-feature">no GUI menus</li>
+          </ul>
+          <a class="pricing-cta" href="https://discord.com/users/57xi0" target="_blank">enquire on discord →</a>
+        </div>
+
+        <div class="pricing-tier featured">
+          <span class="tier-badge pop">most popular</span>
+          <p class="tier-name">Standard</p>
+          <p class="tier-price">£40<span style="font-size:16px;color:#555"> – £90</span></p>
+          <p class="tier-price-note">one-off · 2 revisions included</p>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li class="tier-feature on">multi-command systems</li>
+            <li class="tier-feature on">GUI menus &amp; inventory UI</li>
+            <li class="tier-feature on">config + permissions</li>
+            <li class="tier-feature on">Discord webhook support</li>
+            <li class="tier-feature on">delivered within 5–10 days</li>
+            <li class="tier-feature">no database / persistence</li>
+          </ul>
+          <a class="pricing-cta" href="https://discord.com/users/57xi0" target="_blank">enquire on discord →</a>
+        </div>
+
+        <div class="pricing-tier">
+          <span class="tier-badge">complex</span>
+          <p class="tier-name">Advanced</p>
+          <p class="tier-price">£100<span style="font-size:16px;color:#444">+</span></p>
+          <p class="tier-price-note">quote-based · revisions negotiated</p>
+          <div class="tier-divider"></div>
+          <ul class="tier-features">
+            <li class="tier-feature on">full system builds</li>
+            <li class="tier-feature on">database &amp; data persistence</li>
+            <li class="tier-feature on">third-party API integration</li>
+            <li class="tier-feature on">anticheat / NMS work</li>
+            <li class="tier-feature on">ongoing support available</li>
+            <li class="tier-feature on">timeline agreed upfront</li>
+          </ul>
+          <a class="pricing-cta" href="https://discord.com/users/57xi0" target="_blank">enquire on discord →</a>
+        </div>
+
+      </div>
+
+      <p class="pricing-note">
+        <span>50% upfront</span> is required before work begins on any order. The remaining 50% is due on delivery.
+        Prices are in GBP — international payments accepted via Revolut.
+        Rush orders (&lt;48h turnaround) carry a <span>+40% surcharge</span>.
+        All plugins are tested on Paper 1.20+ before delivery.
+      </p>
+    </div>
+  </div>
+
+  <!-- DONATION TAB -->
+  <div id="tab-donation" class="section">
+    <div class="port-donation">
+      <p class="section-label">support the work</p>
+      <div class="donation-card">
+        <h2 class="donation-heading">Buy me a coffee.</h2>
+        <p class="donation-desc">All plugins in this portfolio are free. If one saved you time or made your server better, a small donation goes a long way toward keeping development going.</p>
+        <a class="donation-btn" href="https://revolut.me/sebast_6r_rswx" target="_blank">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.137 0c3.137 0 5.205 1.61 5.205 4.474 0 2.042-1.036 3.459-2.664 4.15l2.912 5.186H15.4l-2.576-4.62h-1.842v4.62H8.017V0zm-2.154 2.656v4.01h1.98c1.51 0 2.378-.714 2.378-2.037 0-1.27-.868-1.973-2.378-1.973zM10.981 16.03c0-4.404 2.83-7.104 6.71-7.104.638 0 1.257.077 1.84.22L18.18 11.7a4.26 4.26 0 0 0-.937-.1c-2.37 0-3.88 1.58-3.88 4.43 0 2.84 1.51 4.42 3.88 4.42.33 0 .648-.035.95-.1l1.34 2.553a7.22 7.22 0 0 1-2.29.363c-3.88 0-6.263-2.7-6.263-7.236z"/></svg>
+          donate via revolut
+        </a>
+        <p class="donation-note">any amount is appreciated — no account needed.</p>
       </div>
     </div>
+  </div>
 
-    <div class="plugin-card">
-      <div class="plugin-left">
-        <p class="plugin-name">ModCall</p>
-        <span class="plugin-tag">staff</span>
-        <span class="plugin-tag">utility</span>
-      </div>
-      <div class="plugin-right">
-        <p class="plugin-tagline">Players reach staff in one command.</p>
-        <p class="plugin-desc">When a player needs help — griefers, bugs, being stuck — they run <code class="cmd-pill">/modcall</code> and every online moderator is instantly alerted. A staff member accepts and teleports directly to them. No hunting, no DMs, no chaos in chat.</p>
-        <ul class="plugin-features">
-          <li class="plugin-feature highlight"><code class="cmd-pill">/modcall</code></li>
-          <li class="plugin-feature">instant staff alerts</li>
-          <li class="plugin-feature">accept &amp; teleport</li>
-          <li class="plugin-feature">organised queue</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="plugin-card">
-      <div class="plugin-left">
-        <p class="plugin-name">Sussy</p>
-        <span class="plugin-tag">anticheat</span>
-        <span class="plugin-tag">investigation</span>
-      </div>
-      <div class="plugin-right">
-        <p class="plugin-tagline">A silent queue for suspected cheaters.</p>
-        <p class="plugin-desc">Tracks GrimAC violations and unusual straight-down mining patterns, then surfaces flagged players in a private staff-only menu. Inspect, spectate, and review without the player ever knowing. Helps staff gather real evidence before acting — no false bans.</p>
-        <ul class="plugin-features">
-          <li class="plugin-feature highlight"><code class="cmd-pill">/sussy</code></li>
-          <li class="plugin-feature">GrimAC integration</li>
-          <li class="plugin-feature">mining analysis</li>
-          <li class="plugin-feature">spectate mode</li>
-          <li class="plugin-feature">silent — no alerts</li>
-          <li class="plugin-feature">evidence first</li>
-        </ul>
-      </div>
-    </div>
-
-  </main>
-
+  <!-- CONTACT (always visible) -->
   <section class="port-contact">
     <p class="contact-label">contact</p>
     <div class="contact-row">
-
       <div class="contact-item" onclick="copyContact(this, '57xi0')">
         <span class="contact-copied">copied!</span>
         <svg class="contact-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -364,7 +618,6 @@
           <p class="contact-value">57xi0</p>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -374,6 +627,13 @@
   </footer>
 
   <script>
+    function showTab(name, el) {
+      document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
+      document.querySelectorAll('.port-nav-item').forEach(function(n) { n.classList.remove('active'); });
+      document.getElementById('tab-' + name).classList.add('active');
+      el.classList.add('active');
+    }
+
     function copyContact(el, text) {
       navigator.clipboard.writeText(text).then(function() {
         el.classList.add('copied');
