@@ -265,7 +265,7 @@
   <div id="tab-offend" class="section">
 
     <div class="offend-hero">
-      <p class="offend-eyebrow">paper 1.21 · java 21 · v2.1.0</p>
+      <p class="offend-eyebrow">paper 1.21 · java 21 · v3.0</p>
       <div class="offend-badge">
         <span class="offend-badge-dot"></span>
         <span class="offend-badge-text">most advanced plugin — by far</span>
@@ -279,8 +279,8 @@
     </div>
 
     <div class="offend-stats">
-      <div class="ostat"><span class="ostat-val">30</span><span class="ostat-label">source files</span></div>
-      <div class="ostat"><span class="ostat-val">51</span><span class="ostat-label">automated checks</span></div>
+      <div class="ostat"><span class="ostat-val">31</span><span class="ostat-label">source files</span></div>
+      <div class="ostat"><span class="ostat-val">46</span><span class="ostat-label">automated checks</span></div>
       <div class="ostat"><span class="ostat-val">10+</span><span class="ostat-label">commands</span></div>
       <div class="ostat"><span class="ostat-val">3</span><span class="ostat-label">discord integrations</span></div>
       <div class="ostat"><span class="ostat-val">0</span><span class="ostat-label">databases needed</span></div>
@@ -328,12 +328,14 @@
         <div class="cmd-entry"><span class="cmd-name">/unoffend &lt;id&gt;</span><span class="cmd-info">Remove a specific punishment by its unique ID — bans or mutes. Logs the removal to Discord and reverts DiscordSRV role sync.</span></div>
         <div class="cmd-entry"><span class="cmd-name">/offend lookup &lt;id&gt;</span><span class="cmd-info">Pull the full record for any punishment — player, moderator, offence, duration, status, timestamps, and UUIDs.</span></div>
         <div class="cmd-entry"><span class="cmd-name">/offend add &lt;name&gt; &lt;ban|mute&gt; &lt;duration&gt;</span><span class="cmd-info">Create or update an offence preset. Duration supports s / m / h / d / w combinations or&nbsp;<strong style="color:#666">perm</strong>.</span></div>
+        <div class="cmd-entry"><span class="cmd-name">/offend remove &lt;offence&gt;</span><span class="cmd-info">Delete a saved offence preset. Punishments already issued with it are untouched.</span></div>
+        <div class="cmd-entry"><span class="cmd-name">/offend list</span><span class="cmd-info">List every saved offence preset with its punishment type and duration.</span></div>
         <div class="cmd-entry"><span class="cmd-name">/offend &lt;player&gt; unban / unmute</span><span class="cmd-info">Remove a ban or mute by player name. Marks the history record revoked and fires a Discord log.</span></div>
         <div class="cmd-entry"><span class="cmd-name">/offend activate &lt;code&gt;</span><span class="cmd-info">Activate your licence key on this server. Check status anytime with&nbsp;<strong style="color:#666">/offend license</strong>.</span></div>
         <div class="cmd-entry"><span class="cmd-name">/offend reload</span><span class="cmd-info">Hot-reload messages.yml to update ban screens and mute warnings without restarting. Invalid YAML is rejected safely.</span></div>
         <div class="cmd-entry"><span class="cmd-name">/modcall [reason]</span><span class="cmd-info">Send a help request to all online moderators with a 30-second cooldown. Mods receive a clickable, claimable alert.</span></div>
         <div class="cmd-entry"><span class="cmd-name">/modclaim &lt;id&gt;</span><span class="cmd-info">Accept a mod call. Atomic — only one mod can claim each call. All other mods are notified who picked it up.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/modcheck &lt;player&gt; / free &lt;player&gt;</span><span class="cmd-info">Teleport a player to the private modcheck room, then restore their original location when freed.</span></div>
+        <div class="cmd-entry"><span class="cmd-name">/modcheck setup / &lt;player&gt; / free &lt;player&gt;</span><span class="cmd-info">Set the private room in one command, then teleport any player into it. Their return location is saved and restored the moment you free them.</span></div>
         <div class="cmd-entry"><span class="cmd-name">/mod add / remove / list</span><span class="cmd-info">Manage the moderator list — controls who receives mod call pings and has access to staff commands.</span></div>
       </div>
 
