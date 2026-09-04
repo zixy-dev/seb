@@ -27,6 +27,12 @@
 
     .section { display: none; }
     .section.active { display: block; }
+    .section.leaving { opacity: 0; transform: translateY(-6px); transition: opacity 0.16s ease, transform 0.16s ease; }
+    .section.entering { opacity: 0; transform: translateY(8px); }
+    .section.entering.entered { opacity: 1; transform: translateY(0); transition: opacity 0.32s ease, transform 0.32s ease; }
+    @media (prefers-reduced-motion: reduce) {
+      .section.leaving, .section.entering, .section.entering.entered { opacity: 1; transform: none; transition: none; }
+    }
 
     /* ── PLUGINS TAB ── */
     .port-plugins { padding: 0 40px 64px; }
@@ -179,6 +185,41 @@
       .cmd-name { border-right: none; border-bottom: 1px solid #0d0d0d; padding-bottom: 10px; }
       .purchase-block { padding: 24px 20px; }
     }
+
+    /* ── NEW WIDGETS (preview) ── */
+    .gold-badge-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #96710b; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+
+    .ostat.boxed { border: 1px solid #96710b; background: #000; border-radius: 6px; padding: 10px 16px; }
+
+    .cmd-name.copyable { cursor: pointer; }
+    .cmd-name.copyable:hover { color: #4ade80; }
+
+    .discord-preview { border-left: 3px solid #ED4245; background: #0a0a0a; border-radius: 4px; padding: 16px 18px; margin-bottom: 48px; max-width: 560px; }
+    .discord-preview-title { font-size: 13px; font-weight: 600; color: #eee; margin-bottom: 12px; }
+    .discord-preview-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; }
+    .discord-preview-fname { font-size: 9px; color: #96710b; font-weight: 600; margin-bottom: 2px; letter-spacing: 0.04em; }
+    .discord-preview-fval { font-size: 11px; color: #999; }
+
+    .lic-viewer { border: 1px solid #161616; border-radius: 8px; background: #040404; padding: 32px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; margin-bottom: 48px; }
+    .lv-tiers { display: flex; flex-direction: column; gap: 10px; }
+    .lv-tier { border: 1px solid #96710b; background: #000; border-radius: 6px; padding: 14px 16px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: border-color 0.15s, background 0.15s; }
+    .lv-tier:hover { border-color: #c9a227; }
+    .lv-tier.active { border-color: #4ade80; background: #0d1f13; }
+    .lv-tier-name { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #888; letter-spacing: 0.04em; text-transform: uppercase; }
+    .lv-tier.active .lv-tier-name { color: #4ade80; }
+    .lv-tier-price { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #d9ac3d; font-weight: 500; }
+    .lv-tier-price span { color: #333; font-size: 11px; font-weight: 400; }
+    .lv-result { border: 1px solid #1a1a1a; border-radius: 8px; background: #050505; padding: 24px; display: flex; flex-direction: column; }
+    .lv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid #111; }
+    .lv-row:last-of-type { border-bottom: none; }
+    .lv-row-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #333; letter-spacing: 0.08em; text-transform: uppercase; }
+    .lv-row-val { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #ccc; }
+    .lv-row-val.big { font-size: 20px; color: #d9ac3d; font-weight: 500; }
+    .lv-row-val.accent { color: #4ade80; }
+    .lv-command { margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #666; background: #000; border: 1px solid #96710b; border-radius: 4px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .lv-copy { background: transparent; border: 1px solid #222; color: #96710b; font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 4px 9px; border-radius: 3px; cursor: pointer; transition: color 0.15s, border-color 0.15s; }
+    .lv-copy:hover { color: #4ade80; border-color: #4ade80; }
+    @media (max-width: 760px) { .lic-viewer { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -278,12 +319,12 @@
       </div>
     </div>
 
-    <div class="offend-stats">
-      <div class="ostat"><span class="ostat-val">31</span><span class="ostat-label">source files</span></div>
-      <div class="ostat"><span class="ostat-val">46</span><span class="ostat-label">automated checks</span></div>
-      <div class="ostat"><span class="ostat-val">10+</span><span class="ostat-label">commands</span></div>
-      <div class="ostat"><span class="ostat-val">3</span><span class="ostat-label">discord integrations</span></div>
-      <div class="ostat"><span class="ostat-val">0</span><span class="ostat-label">databases needed</span></div>
+    <div class="offend-stats" id="offendStats">
+      <div class="ostat boxed"><span class="ostat-val" data-target="43">0</span><span class="ostat-label">source files</span></div>
+      <div class="ostat boxed"><span class="ostat-val" data-target="57">0</span><span class="ostat-label">automated checks</span></div>
+      <div class="ostat boxed"><span class="ostat-val">10+</span><span class="ostat-label">commands</span></div>
+      <div class="ostat boxed"><span class="ostat-val" data-target="3">0</span><span class="ostat-label">discord integrations</span></div>
+      <div class="ostat boxed"><span class="ostat-val">0</span><span class="ostat-label">databases needed</span></div>
     </div>
 
     <div class="offend-body">
@@ -324,19 +365,19 @@
 
       <p class="o-label">all commands</p>
       <div class="cmd-table">
-        <div class="cmd-entry"><span class="cmd-name">/offend &lt;player&gt; &lt;offence&gt;</span><span class="cmd-info">Apply a saved offence preset. Add&nbsp;<strong style="color:#666">broadcast</strong>&nbsp;to announce the punishment server-wide.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/unoffend &lt;id&gt;</span><span class="cmd-info">Remove a specific punishment by its unique ID — bans or mutes. Logs the removal to Discord and reverts DiscordSRV role sync.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/offend lookup &lt;id&gt;</span><span class="cmd-info">Pull the full record for any punishment — player, moderator, offence, duration, status, timestamps, and UUIDs.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/offend add &lt;name&gt; &lt;ban|mute&gt; &lt;duration&gt;</span><span class="cmd-info">Create or update an offence preset. Duration supports s / m / h / d / w combinations or&nbsp;<strong style="color:#666">perm</strong>.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/offend remove &lt;offence&gt;</span><span class="cmd-info">Delete a saved offence preset. Punishments already issued with it are untouched.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/offend list</span><span class="cmd-info">List every saved offence preset with its punishment type and duration.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/offend &lt;player&gt; unban / unmute</span><span class="cmd-info">Remove a ban or mute by player name. Marks the history record revoked and fires a Discord log.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/offend activate &lt;code&gt;</span><span class="cmd-info">Activate your licence key on this server. Check status anytime with&nbsp;<strong style="color:#666">/offend license</strong>.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/offend reload</span><span class="cmd-info">Hot-reload messages.yml to update ban screens and mute warnings without restarting. Invalid YAML is rejected safely.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/modcall [reason]</span><span class="cmd-info">Send a help request to all online moderators with a 30-second cooldown. Mods receive a clickable, claimable alert.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/modclaim &lt;id&gt;</span><span class="cmd-info">Accept a mod call. Atomic — only one mod can claim each call. All other mods are notified who picked it up.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/modcheck setup / &lt;player&gt; / free &lt;player&gt;</span><span class="cmd-info">Set the private room in one command, then teleport any player into it. Their return location is saved and restored the moment you free them.</span></div>
-        <div class="cmd-entry"><span class="cmd-name">/mod add / remove / list</span><span class="cmd-info">Manage the moderator list — controls who receives mod call pings and has access to staff commands.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/offend &lt;player&gt; &lt;offence&gt;</span><span class="cmd-info">Apply a saved offence preset. Add&nbsp;<strong style="color:#666">broadcast</strong>&nbsp;to announce the punishment server-wide.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/unoffend &lt;id&gt;</span><span class="cmd-info">Remove a specific punishment by its unique ID — bans or mutes. Logs the removal to Discord and reverts DiscordSRV role sync.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/offend lookup &lt;id&gt;</span><span class="cmd-info">Pull the full record for any punishment — player, moderator, offence, duration, status, timestamps, and UUIDs.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/offend add &lt;name&gt; &lt;ban|mute&gt; &lt;duration&gt;</span><span class="cmd-info">Create or update an offence preset. Duration supports s / m / h / d / w combinations or&nbsp;<strong style="color:#666">perm</strong>.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/offend remove &lt;offence&gt;</span><span class="cmd-info">Delete a saved offence preset. Punishments already issued with it are untouched.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/offend list</span><span class="cmd-info">List every saved offence preset with its punishment type and duration.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/offend &lt;player&gt; unban / unmute</span><span class="cmd-info">Remove a ban or mute by player name. Marks the history record revoked and fires a Discord log.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/offend activate &lt;code&gt;</span><span class="cmd-info">Activate your licence key on this server. Check status anytime with&nbsp;<strong style="color:#666">/offend license</strong>.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/offend reload</span><span class="cmd-info">Hot-reload messages.yml to update ban screens and mute warnings without restarting. Invalid YAML is rejected safely.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/modcall [reason]</span><span class="cmd-info">Send a help request to all online moderators with a 30-second cooldown. Mods receive a clickable, claimable alert.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/modclaim &lt;id&gt;</span><span class="cmd-info">Accept a mod call. Atomic — only one mod can claim each call. All other mods are notified who picked it up.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/modcheck setup / &lt;player&gt; / free &lt;player&gt;</span><span class="cmd-info">Set the private room in one command, then teleport any player into it. Their return location is saved and restored the moment you free them.</span></div>
+        <div class="cmd-entry"><span class="cmd-name copyable" onclick="copyCmdName(this)">/mod add / remove / list</span><span class="cmd-info">Manage the moderator list — controls who receives mod call pings and has access to staff commands.</span></div>
       </div>
 
       <p class="o-label">integrations</p>
@@ -346,6 +387,17 @@
         <div class="int-tag"><span class="int-tag-dot" style="background:#22c55e"></span>Simple Voice Chat 2.6.0</div>
         <div class="int-tag"><span class="int-tag-dot" style="background:#f97316"></span>Paper 1.21.11</div>
         <div class="int-tag"><span class="int-tag-dot" style="background:#f97316"></span>Java 21</div>
+      </div>
+
+      <p class="gold-badge-label">live preview · discord webhook</p>
+      <div class="discord-preview">
+        <p class="discord-preview-title">🚫 Ban Issued • #482</p>
+        <div class="discord-preview-fields">
+          <div><p class="discord-preview-fname">👤 PLAYER</p><p class="discord-preview-fval">Steve_YT</p></div>
+          <div><p class="discord-preview-fname">⚖️ ACTION</p><p class="discord-preview-fval">Ban</p></div>
+          <div><p class="discord-preview-fname">📌 STATUS</p><p class="discord-preview-fval">Active</p></div>
+          <div><p class="discord-preview-fname">⏱️ DURATION</p><p class="discord-preview-fval">7 days</p></div>
+        </div>
       </div>
 
       <p class="o-label">licence tiers</p>
@@ -392,6 +444,19 @@
             <li class="lic-feat on">all future updates included</li>
             <li class="lic-feat on">best long-term value</li>
           </ul>
+        </div>
+      </div>
+
+      <p class="gold-badge-label">try it — licence viewer</p>
+      <div class="lic-viewer">
+        <div class="lv-tiers" id="lvTiersOffend"></div>
+        <div class="lv-result">
+          <div class="lv-row"><span class="lv-row-label">Tier</span><span class="lv-row-val big accent" id="lvTierOffend">Trial</span></div>
+          <div class="lv-row"><span class="lv-row-label">Price</span><span class="lv-row-val big" id="lvPriceOffend">£10</span></div>
+          <div class="lv-row"><span class="lv-row-label">Access length</span><span class="lv-row-val" id="lvLengthOffend">7 days</span></div>
+          <div class="lv-row"><span class="lv-row-label">If activated today</span><span class="lv-row-val" id="lvExpiryOffend">—</span></div>
+          <div class="lv-row"><span class="lv-row-label">Per-day cost</span><span class="lv-row-val" id="lvPerDayOffend">—</span></div>
+          <div class="lv-command"><span>/offend activate &lt;key&gt;</span><button class="lv-copy" onclick="lvCopyCmd()">copy</button></div>
         </div>
       </div>
 
@@ -505,6 +570,19 @@
         All plugins are tested on Paper 1.20+ before delivery.
       </p>
 
+      <p class="gold-badge-label">try it — offend licence viewer</p>
+      <div class="lic-viewer">
+        <div class="lv-tiers" id="lvTiersPricing"></div>
+        <div class="lv-result">
+          <div class="lv-row"><span class="lv-row-label">Tier</span><span class="lv-row-val big accent" id="lvTierPricing">Trial</span></div>
+          <div class="lv-row"><span class="lv-row-label">Price</span><span class="lv-row-val big" id="lvPricePricing">£10</span></div>
+          <div class="lv-row"><span class="lv-row-label">Access length</span><span class="lv-row-val" id="lvLengthPricing">7 days</span></div>
+          <div class="lv-row"><span class="lv-row-label">If activated today</span><span class="lv-row-val" id="lvExpiryPricing">—</span></div>
+          <div class="lv-row"><span class="lv-row-label">Per-day cost</span><span class="lv-row-val" id="lvPerDayPricing">—</span></div>
+          <div class="lv-command"><span>/offend activate &lt;key&gt;</span><button class="lv-copy" onclick="lvCopyCmd()">copy</button></div>
+        </div>
+      </div>
+
       <p class="section-label">how to order</p>
       <div class="purchase-block">
         <h3 class="purchase-block-title">Placing an order is simple.</h3>
@@ -582,11 +660,38 @@
   </footer>
 
   <script>
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     function showTab(name, el) {
-      document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
       document.querySelectorAll('.port-nav-item').forEach(function(n) { n.classList.remove('active'); });
-      document.getElementById('tab-' + name).classList.add('active');
       el.classList.add('active');
+
+      var current = document.querySelector('.section.active');
+      var next = document.getElementById('tab-' + name);
+      if (!next || current === next) return;
+
+      if (prefersReducedMotion) {
+        if (current) current.classList.remove('active');
+        next.classList.add('active');
+        return;
+      }
+
+      function activateNext() {
+        next.classList.add('active', 'entering');
+        void next.offsetWidth; // force reflow so the transition below actually animates
+        requestAnimationFrame(function() { next.classList.add('entered'); });
+        setTimeout(function() { next.classList.remove('entering', 'entered'); }, 380);
+      }
+
+      if (current) {
+        current.classList.add('leaving');
+        setTimeout(function() {
+          current.classList.remove('active', 'leaving');
+          activateNext();
+        }, 160);
+      } else {
+        activateNext();
+      }
     }
 
     function copyContact(el, text) {
@@ -603,6 +708,95 @@
         setTimeout(function() { btn.textContent = orig; }, 1800);
       });
     }
+
+    /* ── copy-to-clipboard command names ── */
+    function copyCmdName(el) {
+      var text = el.textContent.trim();
+      navigator.clipboard.writeText(text).then(function() {
+        var orig = el.textContent;
+        el.textContent = 'copied!';
+        setTimeout(function() { el.textContent = orig; }, 1200);
+      });
+    }
+
+    /* ── scroll-triggered stat counters ── */
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function animateCount(el) {
+      var target = parseInt(el.dataset.target, 10);
+      if (reduceMotion) { el.textContent = target; return; }
+      var duration = 2600;
+      var start = performance.now();
+      function tick(now) {
+        var progress = Math.min(1, (now - start) / duration);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    var offendStats = document.getElementById('offendStats');
+    if (offendStats) {
+      var statNums = offendStats.querySelectorAll('.ostat-val[data-target]');
+      var statObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            statNums.forEach(function(el) { el.textContent = '0'; animateCount(el); });
+          }
+        });
+      }, { threshold: 0.4 });
+      statObserver.observe(offendStats);
+    }
+
+    /* ── licence viewer ── */
+    var LV_TIERS = [
+      { name: 'Trial', price: 10, days: 7, note: '1 week' },
+      { name: 'Standard', price: 25, days: 30, note: '1 month' },
+      { name: 'Extended', price: 40, days: 90, note: '3 months' },
+      { name: 'Permanent', price: 60, days: null, note: 'lifetime' }
+    ];
+    var lvActive = {};
+
+    function lvRenderTiers(prefix) {
+      var el = document.getElementById('lvTiers' + prefix);
+      if (!el) return;
+      el.innerHTML = LV_TIERS.map(function(t, i) {
+        return '<div class="lv-tier ' + (i === lvActive[prefix] ? 'active' : '') + '" onclick="lvSelect(\'' + prefix + '\',' + i + ')">' +
+          '<span class="lv-tier-name">' + t.name + '</span>' +
+          '<span class="lv-tier-price">£' + t.price + ' <span>· ' + t.note + '</span></span></div>';
+      }).join('');
+    }
+
+    function lvUpdateResult(prefix) {
+      var t = LV_TIERS[lvActive[prefix]];
+      document.getElementById('lvTier' + prefix).textContent = t.name;
+      document.getElementById('lvPrice' + prefix).textContent = '£' + t.price;
+      document.getElementById('lvLength' + prefix).textContent = t.days ? t.days + ' days' : 'Lifetime';
+      if (t.days) {
+        var expiry = new Date();
+        expiry.setDate(expiry.getDate() + t.days);
+        document.getElementById('lvExpiry' + prefix).textContent = 'Expires ' + expiry.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        document.getElementById('lvPerDay' + prefix).textContent = '£' + (t.price / t.days).toFixed(2) + ' / day';
+      } else {
+        document.getElementById('lvExpiry' + prefix).textContent = 'Never expires';
+        document.getElementById('lvPerDay' + prefix).textContent = '—';
+      }
+    }
+
+    function lvSelect(prefix, i) {
+      lvActive[prefix] = i;
+      lvRenderTiers(prefix);
+      lvUpdateResult(prefix);
+    }
+
+    function lvCopyCmd() {
+      navigator.clipboard.writeText('/offend activate <key>');
+    }
+
+    ['Offend', 'Pricing'].forEach(function(prefix) {
+      lvActive[prefix] = 0;
+      lvRenderTiers(prefix);
+      lvUpdateResult(prefix);
+    });
   </script>
 
 </body>
